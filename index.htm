@@ -25,16 +25,26 @@
                   var eventTime = moment(event.start.local).format(
                     'D MMM YYYY h:mm A'
                   );
-  
-                  // console.dir(event);
+
+                  let address = event.venue.name;
+                  if (!!event.venue.address.localized_address_display) {
+                      address += `, ${event.venue.address.localized_address_display}` }
+
+                  let gAddress = address.replace(', ', '+');
+                  gAddress = gAddress.replace(' ', '+');
+
+                  let gmap = `https://www.google.com/maps/dir/?api=1&origin=${gAddress}`;
+
+                //   console.dir(event);
 
                     s += "<section class='section static courses'>";
                     s += "<div class='panel'>";
-                    s += "<div class='course'><a href='" + event.url + "'>" + event.name.text + "</a></div>";
+                    s += `<div class='course'><a href='${event.url}'>${event.name.text}</a></div>`;
                     s += "<div class='description'>";
-                    s += "<p><b>Location: " + event.venue.address.address_1 + "</b><br/>";
-                    s += "<b>Date/Time: " + eventTime + "</b></p>";
-                    s += "<p>" + event.description.text + "</p>";
+                    s += `<p><b>Location: ${address}</b>&nbsp;&nbsp;&nbsp;<a href='${gmap}' target='_new'><img title='directions' src='img/map.png'></a><br/>`;
+                    s += `<b>Date/Time: ${eventTime}</b></p>`;
+                    // s += "<p>" + event.description.text + "</p>";
+                    s += event.description.html;
                     s += "</div>";
                     s += "<div class='price'></div>";
                     s += "<div class='button'>";
