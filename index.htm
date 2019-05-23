@@ -5,62 +5,67 @@
     <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.3/moment.js"></script>
     <script>
-        $(document).ready(function() {
-          var token = 'C2IOXLYRS3CMI3IT35NA';
-          var organizer = '6102108837';
-          var $events = $('#events');
-  
-          $events.html('<i>Loading events...</i>');
-          $.get(
-            'https://www.eventbriteapi.com/v3/events/search/?token=' +
-              token +
-              '&organizer.id=' +
-              organizer +
-              '&expand=venue',
-            function(res) {
-              if (res.events.length) {
-                var s = '';
-                for (var i = 0; i < res.events.length; i++) {
-                  var event = res.events[i];
-                  var eventTime = moment(event.start.local).format(
-                    'D MMM YYYY h:mm A'
-                  );
+        $(document).ready(function () {
+            var token = 'C2IOXLYRS3CMI3IT35NA';
+            var organizer = '6102108837';
+            var $events = $('#events');
 
-                  let address = event.venue.name;
-                  if (!!event.venue.address.localized_address_display) {
-                      address += ',' + event.venue.address.localized_address_display }
+            $events.html('<i>Loading events...</i>');
+            $.get(
+                'https://www.eventbriteapi.com/v3/events/search/?token=' +
+                token +
+                '&organizer.id=' +
+                organizer +
+                '&expand=venue',
+                function (res) {
+                    if (res.events.length) {
+                        var s = '';
+                        for (var i = 0; i < res.events.length; i++) {
+                            var event = res.events[i];
+                            var eventTime = moment(event.start.local).format(
+                                'D MMM YYYY h:mm A'
+                            );
 
-                  let gAddress = address.replace(', ', '+');
-                  gAddress = gAddress.replace(' ', '+');
+                            let address = event.venue.name;
+                            if (!!event.venue.address.localized_address_display) {
+                                address += ',' + event.venue.address.localized_address_display
+                            }
 
-                  let gmap = `https://www.google.com/maps/dir/?api=1&origin=${gAddress}`;
+                            let gAddress = address.replace(', ', '+');
+                            gAddress = gAddress.replace(' ', '+');
 
-                //   console.dir(event);
+                            let gmap = 'https://www.google.com/maps/dir/?api=1&origin=' + gAddress;
 
-                    s += "<section class='section static courses'>";
-                    s += "<div class='panel'>";
-                    s += `<div class='course'><a href='${event.url}'>${event.name.text}</a></div>`;
-                    s += "<div class='description'>";
-                    s += `<p><b>Location: ${address}</b>&nbsp;&nbsp;&nbsp;<a href='${gmap}' target='_new'><img title='directions' src='img/map.png'></a><br/>`;
-                    s += `<b>Date/Time: ${eventTime}</b></p>`;
-                    // s += "<p>" + event.description.text + "</p>";
-                    s += event.description.html;
-                    s += "</div>";
-                    s += "<div class='price'></div>";
-                    s += "<div class='button'>";
-                    s += "<button><a href='mailto:events@motorradcentral.com'>CONTACT US</a></button>";
-                    s += "</div>";
-                    s += "<div class='clear'></div>";
-                    s += "</section>";
+                            //   console.dir(event);
+
+                            s += "<section class='section static courses'>";
+                            s += "<div class='panel'>";
+                            s += "<div class='course'><a href='" + event.url +
+                                "'>${event.name.text}</a></div>";
+                            s += "<div class='description'>";
+                            s += "<p><b>Location: " + address + "</b>&nbsp;&nbsp;&nbsp;<a href='" + gmap +
+                                "' target='_new'><img title='directions' src='img/map.png'></a><br/>";
+                            s += "<b>Date/Time: " + eventTime + "</b></p>"
+                            ";
+                            // s += "<p>" + event.description.text + "</p>";
+                            s += event.description.html;
+                            s += "</div>";
+                            s += "<div class='price'></div>";
+                            s += "<div class='button'>";
+                            s +=
+                                "<button><a href='mailto:events@motorradcentral.com'>CONTACT US</a></button>";
+                            s += "</div>";
+                            s += "<div class='clear'></div>";
+                            s += "</section>";
+                        }
+                        $events.html(s);
+                    } else {
+                        $events.html("<p>Sorry, there are no upcoming events.</p>");
+                    }
                 }
-                $events.html(s);
-              } else {
-                $events.html('<p>Sorry, there are no upcoming events.</p>');
-              }
-            }
-          );
+            );
         });
-      </script>
+    </script>
     <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
     <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
     <link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png">
@@ -384,16 +389,23 @@
                             <a href="http://www.motorradcentral.com"><img src="img/mce.svg" width="100"></a><a>
                             </a></td>
                         <td style="padding-left: 20px; font-size: 0.7em; color: #333; text-decoration: none;">
-                            <div class="name" style="font-weight: bold;">Motorrad Central <span style="color: gray">Edinburgh</span></div>
+                            <div class="name" style="font-weight: bold;">Motorrad Central <span
+                                    style="color: gray">Edinburgh</span></div>
                             <div class="title"><i>226 High Street, Dalkeith, EH22 1AZ</i></div>
                             <div class="site"><a href="http://www.motorradcentral.com">www.motorradcentral.com</a></div>
-                            <div class="email"><a href="mailto:info@motorradcentral.com">info@motorradcentral.com</a></div>
-                            <div class="phone"><a href="tel:0131 603 5466">0131 654 2777</a><span style="padding-left: 6px; padding-right: 6px; color: #1186C8"></span></div>
+                            <div class="email"><a href="mailto:info@motorradcentral.com">info@motorradcentral.com</a>
+                            </div>
+                            <div class="phone"><a href="tel:0131 603 5466">0131 654 2777</a><span
+                                    style="padding-left: 6px; padding-right: 6px; color: #1186C8"></span></div>
                             <div style="padding-top: 14px">
-                                <a href="https://www.facebook.com/motorradcentral/"><img id="facebook" src="https://gallery.mailchimp.com/4bab2b6cbe384b82e4e31426c/images/37c183ed-cd47-4691-b9bc-d845c54c4806.png"></a>
-                                <a href="https://twitter.com/motorradcentral/"><img id="twitter" src="https://gallery.mailchimp.com/4bab2b6cbe384b82e4e31426c/images/c694d6b5-4e53-4bd8-b9e8-a61923f4cffe.png"></a>
-                                <a href="https://www.linkedin.com/company/motorradcentral/"><img id="linkedin" src="https://gallery.mailchimp.com/4bab2b6cbe384b82e4e31426c/images/1a5e6c32-a0d1-4e06-9566-2a9ff1f55677.png"></a>
-                                <a href="https://www.instagram.com/motorradcentral/"><img id="instagram" src="https://gallery.mailchimp.com/4bab2b6cbe384b82e4e31426c/images/20733471-d8c0-4262-85f5-542b336a5ea1.png"></a>
+                                <a href="https://www.facebook.com/motorradcentral/"><img id="facebook"
+                                        src="https://gallery.mailchimp.com/4bab2b6cbe384b82e4e31426c/images/37c183ed-cd47-4691-b9bc-d845c54c4806.png"></a>
+                                <a href="https://twitter.com/motorradcentral/"><img id="twitter"
+                                        src="https://gallery.mailchimp.com/4bab2b6cbe384b82e4e31426c/images/c694d6b5-4e53-4bd8-b9e8-a61923f4cffe.png"></a>
+                                <a href="https://www.linkedin.com/company/motorradcentral/"><img id="linkedin"
+                                        src="https://gallery.mailchimp.com/4bab2b6cbe384b82e4e31426c/images/1a5e6c32-a0d1-4e06-9566-2a9ff1f55677.png"></a>
+                                <a href="https://www.instagram.com/motorradcentral/"><img id="instagram"
+                                        src="https://gallery.mailchimp.com/4bab2b6cbe384b82e4e31426c/images/20733471-d8c0-4262-85f5-542b336a5ea1.png"></a>
                             </div>
                         </td>
                     </tr>
