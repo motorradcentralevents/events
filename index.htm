@@ -28,7 +28,7 @@
 
                   let address = event.venue.name;
                   if (!!event.venue.address.localized_address_display) {
-                      address += `, ${event.venue.address.localized_address_display}` }
+                      address += ',' + event.venue.address.localized_address_display }
 
                   let gAddress = address.replace(', ', '+');
                   gAddress = gAddress.replace(' ', '+');
